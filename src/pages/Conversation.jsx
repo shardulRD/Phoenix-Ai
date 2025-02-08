@@ -14,7 +14,7 @@ import { usePromptPreloader } from '../hooks/userPromptPreloader';
  * Components
  */
 import PageTitle from '../components/PageTitle';
-import UserPrompt from '../components/UserPrompt'; // Make sure import matches the correct file name
+import UserPrompt from '../components/UserPrompt.jsx'; // Make sure import matches the correct file name
 import AiResponse from '../components/AiResponse';
 import PromptPreloader from '../components/PromptPreloader';
 
