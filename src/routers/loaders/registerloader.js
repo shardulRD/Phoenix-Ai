@@ -13,7 +13,7 @@ import { redirect } from 'react-router-dom';
  */
 import { account } from '../../lib/appwrite';
 
-const registerLoader = async () => {
+const registerloader = async () => {
   try {
     // Attempt to retrieve the user's account information
     await account.get();
@@ -26,4 +26,4 @@ const registerLoader = async () => {
   return redirect('/');
 };
 
-export default registerLoader;
+export default registerloader;
