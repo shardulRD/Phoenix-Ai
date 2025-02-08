@@ -9,16 +9,16 @@
 import { useRouteError, Link } from 'react-router-dom';
 
 const ConversationError = () => {
-  // Retrieve the error object associated with the current route, if any.
   const error = useRouteError();
 
   return (
     <div className='h-full grid grid-cols-1 justify-items-center content-center px-6'>
       <p className='text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100'>
-        {error.code}</p>
+        {error?.status || 'Error'}
+      </p>
 
       <p className='text-gray-600 dark:text-gray-300 mt-2 mb-4 text-center max-w-md'>
-        {error.message}
+        {error?.message || 'Something went wrong.'}
       </p>
 
       <Link
@@ -33,4 +33,3 @@ const ConversationError = () => {
 };
 
 export default ConversationError;
-   

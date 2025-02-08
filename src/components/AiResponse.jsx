@@ -132,7 +132,7 @@ const AiResponse = ({ aiResponse, children }) => {
                <div className='markdown-content'>
                    <Markdown
                        remarkPlugins={[remarkGfm]}
-                       components={{ code }}
+                       components={{ code: CodeBlock }}
                     >
                       {aiResponse}
                   </Markdown>
