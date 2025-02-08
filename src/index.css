@@ -1,0 +1,566 @@
+@import "tailwindcss";
+
+@import "tailwindcss/preflight"
+@tailwind utilities;
+
+
+@layer base {
+    a,
+    img,
+    button {
+      @apply block;
+    }
+  
+    input {
+      @apply block 
+      outline-none 
+      bg-transparent 
+      w-full 
+      text-gray-800       /* Added for better visibility */
+      dark:text-gray-100; /* Improved dark mode readability */
+    }
+  
+    input[type='password'] {
+      @apply tracking-widest;  /* Replacing tracking-[5px] */
+    }
+  
+    input[type='password']::placeholder {
+      @apply tracking-normal text-gray-400 dark:text-gray-500;  /* Enhanced placeholder visibility */
+    }
+  
+    body {
+      @apply bg-white            /* Replacing bg-light-background */
+      dark:bg-gray-900           /* Replacing dark:bg-dark-background */
+      text-gray-900              /* Replacing text-light-onBackground */
+      dark:text-gray-100;        /* Replacing dark:text-dark-onBackground */
+    }
+  
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      @apply w-2 h-2;
+    }
+  
+    ::-webkit-scrollbar-thumb {
+      @apply bg-gray-300 dark:bg-gray-600 rounded-full;  /* Replacing bg-transparent */
+    }
+  
+    *:hover::-webkit-scrollbar-thumb {
+      @apply bg-gray-400/60 dark:bg-gray-500/60;  /* Replacing bg-light-onBackground/15 */
+    }
+  
+    ::-webkit-scrollbar-track {
+      @apply bg-transparent;  /* Added for better scroll track visibility */
+    }  
+}
+  
+
+@layer components {
+  /**
+   * Text field
+   */
+  .text-field-wrapper {
+    @apply relative;
+  }
+
+  .text-field {
+    @apply ring-1
+    ring-inset
+    ring-gray-300          /* Replacing ring-light-outline */
+    dark:ring-gray-600     /* Replacing dark:ring-dark-outline */
+    bg-transparent
+    text-gray-800          /* Replacing text-light-onSurface */
+    dark:text-gray-100     /* Replacing dark:text-dark-onSurface */
+    caret-blue-500         /* Replacing caret-light-primary */
+    dark:caret-blue-400    /* Replacing dark:caret-dark-primary */
+    h-14
+    px-4
+    rounded-md             /* Replacing rounded-extraSmall */
+    transition-shadow
+    duration-200           /* Replacing duration-short3 */
+    ease-linear
+
+    hover:ring-gray-500    /* Replacing hover:ring-light-onSurface */
+    hover:dark:ring-gray-400 /* Replacing hover:dark:ring-dark-onSurface */
+
+    focus:ring-2
+    focus:ring-blue-500    /* Replacing focus:ring-light-primary */
+    focus:dark:ring-blue-400; /* Replacing focus:dark:ring-dark-primary */
+  }
+
+  .text-field::placeholder {
+    @apply opacity-0 transition-opacity;
+  }
+
+  .text-field:focus::placeholder {
+    @apply opacity-100;
+  }
+
+  .label-text {
+    @apply absolute
+    text-sm                /* Replacing text-labelLarge */
+    top-[18px]
+    left-2
+    text-gray-500          /* Replacing text-light-onSurfaceVariant */
+    dark:text-gray-400     /* Replacing dark:text-dark-onSurfaceVariant */
+    bg-white               /* Replacing bg-light-background */
+    dark:bg-gray-900       /* Replacing dark:bg-dark-background */
+    px-2
+    origin-left
+    pointer-events-none
+    select-none
+    transition-all         /* Simplified transition properties */
+    duration-300           /* Replacing duration-short4 */
+    ease-in-out;           /* Replacing ease-standard */
+  }
+
+  .text-field-wrapper:hover .label-text {
+    @apply text-gray-800 dark:text-gray-100;
+  }
+
+  .text-field-wrapper:focus-within .label-text,
+  .text-field-wrapper:has(.text-field:not(:placeholder-shown)) .label-text {
+    @apply translate-x-0.5
+    -translate-y-7
+    scale-90;              /* Replacing scale-[0.85] */
+  }
+
+  .text-field-wrapper:focus-within .label-text {
+    @apply text-blue-500 dark:text-blue-400;
+  }
+
+  .text-field-wrapper .helper-text {
+    @apply text-gray-500 dark:text-gray-400 text-xs px-4 pt-1;
+  }
+
+  .btn {
+    @apply h-10
+    flex
+    justify-center
+    items-center
+    rounded-full
+    text-lg
+    px-4
+    transition-shadow
+    duration-150
+    ease-in-out
+    
+    hover:shadow-md
+    
+    focus:shadow-none;
+  }
+   /**
+ * State layer
+ */
+
+  :has(> .state-layer) {
+  @apply relative
+    overflow-hidden
+    isolate;
+  }
+
+  .state-layer {
+  @apply absolute
+    inset-0
+    bg-[var(--state-layer-bg)]
+    opacity-0
+    transition-opacity
+    duration-75 /* You may adjust this value based on your duration-short3 custom config */
+    pointer-events-none
+    select-none
+    -z-10;
+  }
+
+  :has(> .state-layer):hover > .state-layer {
+    @apply opacity-8; /* Assuming 0.08 corresponds to opacity-8 */ 
+  }
+
+  :has(> .state-layer):where(:focus, :focus-visible, :focus-within) > .state-layer {
+    @apply opacity-10; /* Assuming 0.1 corresponds to opacity-10 */
+  }
+
+  .circular-progress {
+    @apply border-4
+      border-current
+      dark:border-current
+      border-r-transparent
+      dark:border-r-transparent
+      w-12
+      h-12
+      rounded-full
+      animate-spin;
+  }
+  
+  .circular-progress.small {
+    @apply border-3
+      w-5
+      h-5;
+  }
+
+  .linear-progress {
+    @apply h-1
+      bg-[var(--light-secondaryContainer)]
+      dark:bg-[var(--dark-secondaryContainer)]
+      rounded-full
+      mx-1
+      overflow-hidden
+      origin-top;
+  }
+  
+  .linear-progress .active-indicator {
+    @apply h-full /* Using h-full instead of h-[inherit] for better compatibility */
+      bg-[var(--light-primary)]
+      dark:bg-[var(--dark-primary)]
+      rounded-full
+      origin-right
+      -translate-x-full;
+  }
+  
+
+  /**
+ * Snackbar
+ */
+  .snackbar {
+    @apply fixed
+    bottom-4
+    left-4
+    right-4
+    bg-[var(--light-inverseSurface)]
+    dark:bg-[var(--dark-inverseSurface)]
+    text-[var(--light-inverseOnSurface)]
+    dark:text-[var(--dark-inverseOnSurface)]
+    text-base /* Adjusted from text-bodyMedium */
+    shadow-lg /* Equivalent to elevation3 */
+    rounded-md /* Equivalent to rounded-extraSmall */
+    min-h-12
+    max-w-[60ch]
+    min-w-[36ch]
+    px-4
+    py-[14px]
+    origin-bottom
+    z-40
+  
+    /* Responsive adjustments for small screens */
+    sm:left-6
+    sm:right-auto
+    sm:bottom-6
+    sm:w-auto;
+  }
+
+  .snackbar.error {
+  @apply bg-[var(--light-errorContainer)]
+    text-[var(--light-onErrorContainer)];
+  }  
+
+  .icon-round {
+    @apply flex items-center justify-center 
+    rounded-full 
+    w-10 h-10 
+    bg-gray-200 dark:bg-gray-700 
+    hover:bg-gray-300 dark:hover:bg-gray-600 
+    transition-all;
+  }
+
+  .icon-btn.small {
+    @apply w-7 h-7 min-w-7 min-h-7 
+    flex items-center justify-center 
+    rounded-full;
+  }
+
+  .icon-btn.small .icon {
+    @apply text-lg;
+  }
+
+  /**
+   * Avatar
+  */
+
+  .avatar {
+    @apply aspect-square
+    min-w-[32px]
+    max-w-[32px]
+    overflow-hidden
+    rounded-full;
+  }
+
+  /**
+   * Menu
+   */
+   .menu-wrapper {
+    @apply relative;
+  }
+
+  .menu {
+    @apply
+    absolute
+    top-[calc(100%+4px)]
+    right-0
+    min-w-[112px]
+    max-w-[280px]
+    py-2
+    z-20
+    origin-top-right
+    scale-75
+    opacity-0
+    invisible
+    transition-[transform,opacity,visibility]
+  }
+
+  .menu.active {
+    @apply scale-100
+    opacity-100
+    visible;
+  }
+
+  .menu-item {
+    @apply w-full h-12 
+    flex items-center gap-2 
+    px-3 rounded-md 
+    hover:bg-gray-100 dark:hover:bg-gray-800 
+    transition-all;
+  }
+
+
+  @media (prefers-color-scheme: dark) {
+    .menu-item {
+      
+    }
+  }
+  /**
+ * Sidebar
+ */
+ .sidebar {
+   @apply 
+   fixed top-0 left-0 
+   h-dvh w-0 max-w-[80vw] 
+   rounded-e-lg shadow-md 
+   overflow-hidden 
+   duration-300 ease-in-out 
+   z-40
+
+   /* Responsive for small screens */
+   sm:max-w-[320px]
+
+   /* Responsive for large screens */
+   lg:static lg:opacity-100 
+   lg:visible lg:w-full 
+   lg:shadow-none lg:rounded-none;
+  }
+
+  .sidebar.active {
+   @apply w-[80vw] 
+   duration-500 ease-out
+
+   /* Responsive for small screens */
+   sm:w-[320px];
+  }
+  
+  .sidebar-inner {
+    @apply 
+    h-full
+    grid
+    grid-rows-[max-content,max-content,1fr,max-content]
+    grid-cols-1
+    px-3
+    opacity-0
+    transition-opacity
+    /* Responsive for large screen */
+    lg:opacity-100;
+  }
+
+  .sidebar.active .sidebar-inner {
+    @apply opacity-100
+  
+  }
+  /**
+   * Prompt field
+   */
+  /**
+ * Prompt field container
+ */
+  .prompt-field-container {
+    @apply min-h-16 
+      rounded-3xl  /* Curved borders */
+      flex items-start
+      flex-wrap 
+      p-2 
+      cursor-text 
+      bg-gray-100 
+      dark:bg-gray-800;
+  }
+
+  .prompt-field {
+   @apply relative 
+         outline-none 
+         grow 
+         mx-4 py-3 
+         max-h-[230px] 
+         overflow-y-auto 
+         whitespace-pre-wrap 
+         bg-transparent 
+         text-gray-900 dark:text-gray-100 
+         text-base 
+         px-4 
+         rounded-2xl
+         text-left /* Slightly curved inner text box */
+         
+         /* Placeholder effect */
+         after:content-[attr(data-placeholder)] 
+         after:text-gray-400 
+         dark:after:text-gray-500 
+         after:absolute 
+         after:left-4 
+         after:top-3
+         
+         after:pointer-events-none;
+  }
+
+  .after-hidden {
+  @apply after:hidden;
+  } 
+  /**
+   * Markdown content
+   */
+  .markdown-content {
+    @apply 
+    
+    leading-7
+    pt-1;
+  }
+
+  .markdown-content > :first-child {
+    @apply !mt-0;
+  }
+
+  .markdown-content :where(h1, h2, h3, h4, h5, h6) {
+    @apply 
+    font-semibold
+    mt-8
+    mb-4;
+  }
+
+  .markdown-content :where(p, pre, table) {
+    @apply my-4;
+  }
+
+  .markdown-content :where(strong, span, a) {
+    @apply inline;
+  }
+
+  .markdown-content :where(ul, ol) {
+    list-style: revert;
+    @apply my-1
+    ps-[18px];
+  }
+
+  .markdown-content code {
+    @apply inline-block
+    
+    text-gray-500          /* Replacing text-light-onSurfaceVariant */
+    dark:text-gray-400  
+    rounded-md
+    py-[1px]
+    px-1.5;
+  }
+
+  .markdown-content strong code {
+    @apply 
+    font-semibold;
+  }
+
+  .markdown-content pre code {
+    @apply block
+    py-2
+    px-3
+    overflow-x-auto;
+  }
+
+  .markdown-content table {
+    @apply 
+    
+    block
+    max-w-max
+    overflow-auto;
+  }
+
+  .markdown-content table th {
+    @apply 
+    p-4
+    text-left
+    whitespace-nowrap;
+  }
+
+  .markdown-content table td {
+    @apply
+    py-3
+    px-4
+    border-t-[1px]
+    border-solid
+  
+  }
+
+  .markdown-content a {
+    @apply
+   
+    underline
+    break-words;
+  }
+
+  .markdown-content .code-block {
+    @apply 
+  
+   
+   
+    mb-0.5
+    overflow-hidden;
+  }
+
+  .markdown-content .code-block * {
+    @apply !bg-inherit;
+  }
+
+   /**
+   * Skeleton
+   */
+   .skeleton {
+    @apply h-4
+    w-full
+    my-3
+  }
+    
+}
+
+
+
+/**
+ * UTILITIES
+ */
+ @layer utilities {
+  .img-box {
+    @apply 
+    
+    overflow-hidden;
+  }
+
+  .img-cover {
+    @apply w-full
+    h-full
+    object-cover;
+  }
+
+  .material-symbols-rounded {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+    @apply w-[1em]
+    min-w-[1em]
+    h-[1em]
+    min-h-[1em]
+    overflow-hidden;
+  }
+
+  .icon-small {
+    @apply text-[18px];
+  }
+}

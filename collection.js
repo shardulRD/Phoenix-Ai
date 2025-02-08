@@ -1,0 +1,1 @@
+bg-surface-container-low dark:bg-dark-surface-container-low text-on-surface dark:text-dark-on-surface fixed top-0 left-0 h-dvh w-full max-w-[80vw] sm:max-w-[320px] rounded-e-lg shadow-lg overflow-hidden transition-width duration-300 ease-in-out z-40 lg:static lg:w-full lg:opacity-100 lg:visible lg:shadow-none lg:rounded-none`
